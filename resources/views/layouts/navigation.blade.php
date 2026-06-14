@@ -1,59 +1,111 @@
-<aside class="app-sidebar fixed left-0 top-0 h-full">
-    <div class="sidebar-logo text-center">
-        <img src="{{ asset('images/logo (3).png') }}"
-             alt="CleverOps Logo"
-             class="w-24 h-24 mx-auto mb-3 rounded-full bg-white p-2">
+<aside
+    x-show="sidebarOpen"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="-translate-x-full"
+    x-transition:enter-end="translate-x-0"
+    x-transition:leave="transition ease-in duration-300"
+    x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="-translate-x-full"
+    class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#1A0040] via-[#160033] to-[#0D1B3E] text-white overflow-y-auto sidebar-scroll z-50"
+>
 
-        <div>CleverOps</div>
-        <p class="text-xs text-slate-400 mt-1">Internal Company System</p>
+    <!-- Logo -->
+    <div class="text-center pt-8 pb-8">
+
+        <img
+            src="{{ asset('images/logo (3).png') }}"
+            class="w-32 h-32 mx-auto mb-4 object-contain"
+            alt="Logo">
+
+        <h2 class="text-4xl font-extrabold leading-tight">
+            Clever Mind POB
+        </h2>
+
+        <p class="text-cyan-400 text-sm mt-2 font-semibold">
+            Power Of Believing
+        </p>
+
     </div>
 
-    <nav class="mt-4">
+    <nav class="px-4 pb-24">
+
+        <!-- Dashboard -->
         <a href="{{ route('dashboard') }}"
-           class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            📊 Dashboard
+           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-4 transition-all duration-300
+           {{ request()->routeIs('dashboard')
+                ? 'bg-gradient-to-r from-purple-600 to-fuchsia-500 shadow-lg'
+                : 'hover:bg-white/10' }}">
+
+            📊 <span class="font-semibold">Dashboard</span>
         </a>
 
-        <div class="px-6 mt-5 mb-2 text-xs uppercase text-slate-500 font-bold">
+        <!-- Workforce -->
+        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
             Workforce
         </div>
 
         <a href="{{ route('departments.index') }}"
-           class="sidebar-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
-            🏢 Departments
+           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            🏢 <span>Departments</span>
         </a>
 
         <a href="{{ route('roles.index') }}"
-           class="sidebar-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
-            🔐 Roles
+           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            🔐 <span>Roles</span>
         </a>
 
-       <a href="{{ route('employees.index') }}"
-   class="sidebar-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-    👥 Employees
-</a>
-        <div class="px-6 mt-5 mb-2 text-xs uppercase text-slate-500 font-bold">
+        <a href="{{ route('employees.index') }}"
+           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            👥 <span>Employees</span>
+        </a>
+
+        <!-- Modules -->
+        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
             Modules
         </div>
 
-        <a href="#" class="sidebar-link">📋 Tasks</a>
-        <a href="#" class="sidebar-link">💰 Finance</a>
-        <a href="#" class="sidebar-link">📁 Documents</a>
+        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            📋 <span>Tasks</span>
+        </a>
 
-        <div class="px-6 mt-5 mb-2 text-xs uppercase text-slate-500 font-bold">
+        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            💰 <span>Finance</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            📁 <span>Documents</span>
+        </a>
+
+        <!-- Account -->
+        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
             Account
         </div>
 
         <a href="{{ route('profile.edit') }}"
-           class="sidebar-link">
-            ⚙️ Profile
+           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
+            ⚙️ <span>Profile</span>
         </a>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="sidebar-link w-full text-left">
-                🚪 Logout
+
+            <button
+                type="submit"
+                class="flex items-center gap-3 px-5 py-4 rounded-2xl w-full text-left hover:bg-red-500/20 transition">
+                🚪 <span>Logout</span>
             </button>
         </form>
+
     </nav>
+
 </aside>
+
+<style>
+.sidebar-scroll{
+    scrollbar-width:none;
+}
+
+.sidebar-scroll::-webkit-scrollbar{
+    display:none;
+}
+</style>
