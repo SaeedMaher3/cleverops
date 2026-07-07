@@ -27,49 +27,24 @@
     }
 @endphp
 
-<div x-data="{ sidebarOpen: true }" class="min-h-screen">
+<div x-data="{ sidebarOpen: true }" class="min-h-screen relative">
 
     @include('layouts.navigation')
 
     <div
-        class="min-h-screen bg-[#F7F8FC] rounded-tl-[38px] relative overflow-hidden transition-all duration-300"
+       class="min-h-screen bg-[#F7F8FC] rounded-tl-[38px] relative transition-all duration-300"
         :class="sidebarOpen ? 'ml-[300px]' : 'ml-0'"
     >
 
-        <!-- Sidebar Toggle -->
-        <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="fixed z-[9999] bottom-8 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-500 text-white shadow-xl border-4 border-white flex items-center justify-center transition-all duration-300"
-            :class="sidebarOpen ? 'left-[276px]' : 'left-5'"
-        >
-
-            <svg x-show="sidebarOpen"
-                 xmlns="http://www.w3.org/2000/svg"
-                 class="w-6 h-6"
-                 fill="none"
-                 viewBox="0 0 24 24"
-                 stroke="currentColor">
-
-                <path stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="3"
-                      d="M15 19l-7-7 7-7"/>
-            </svg>
-
-            <svg x-show="!sidebarOpen"
-                 xmlns="http://www.w3.org/2000/svg"
-                 class="w-6 h-6"
-                 fill="none"
-                 viewBox="0 0 24 24"
-                 stroke="currentColor">
-
-                <path stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="3"
-                      d="M9 5l7 7-7 7"/>
-            </svg>
-
-        </button>
+       <!-- Sidebar Toggle -->
+<button
+    @click="sidebarOpen = !sidebarOpen"
+    class="fixed z-[9999] bottom-8 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-500 text-white shadow-xl border-4 border-white flex items-center justify-center transition-all duration-300"
+    :class="sidebarOpen ? 'left-[276px]' : 'left-5'"
+>
+    <span x-show="sidebarOpen" class="text-2xl font-black">‹</span>
+    <span x-show="!sidebarOpen" class="text-2xl font-black">›</span>
+</button>
 
         <!-- Top Right -->
         <div class="absolute top-6 right-10 z-50 flex items-center gap-7">
