@@ -22,7 +22,7 @@
     x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="translate-x-0"
     x-transition:leave-end="-translate-x-full"
-    class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#160033] via-[#12002b] to-[#071735] text-white overflow-y-auto sidebar-scroll z-50"
+   class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#1A0040] via-[#160033] to-[#0D1B3E] text-white overflow-y-auto sidebar-scroll z-50"
 >
     <div class="px-6 pt-7 pb-5 text-center border-b border-white/10">
         <img src="{{ asset('images/logo (3).png') }}" class="w-24 h-24 mx-auto object-contain" alt="Logo">
@@ -244,8 +244,8 @@
 
 .sidebar-link.active{
     color:white;
-    background:linear-gradient(135deg,#7C3AED,#D946EF);
-    box-shadow:0 14px 30px rgba(217,70,239,.28);
+    background:linear-gradient(135deg,#8B00FF,#D946EF);
+    box-shadow:0 14px 35px rgba(139,0,255,.38);
 }
 
 .sidebar-link.active::before{
