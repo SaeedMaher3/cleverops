@@ -43,7 +43,7 @@
 
     <div
         class="min-h-screen bg-[#F7F8FC] rounded-tl-[38px] relative transition-all duration-300"
-        :class="sidebarOpen ? 'ml-[300px]' : 'ml-0'"
+        :class="sidebarOpen ? 'ml-[300px]' : 'ml-[72px]'"
     >
 
         <!-- Top Right -->

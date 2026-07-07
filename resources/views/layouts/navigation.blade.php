@@ -15,187 +15,163 @@
 @endphp
 
 <aside
-    x-show="sidebarOpen"
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="-translate-x-full"
-    x-transition:enter-end="translate-x-0"
-    x-transition:leave="transition ease-in duration-300"
-    x-transition:leave-start="translate-x-0"
-    x-transition:leave-end="-translate-x-full"
-   class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#1A0040] via-[#160033] to-[#0D1B3E] text-white overflow-y-auto sidebar-scroll z-50"
+    class="fixed left-0 top-0 h-screen bg-gradient-to-b from-[#1A0040] via-[#160033] to-[#0D1B3E] text-white overflow-y-auto sidebar-scroll z-50 transition-all duration-300"
+    :class="sidebarOpen ? 'w-[300px]' : 'w-[72px]'"
 >
-    <div class="px-6 pt-7 pb-5 text-center border-b border-white/10">
-        <img src="{{ asset('images/logo (3).png') }}" class="w-24 h-24 mx-auto object-contain" alt="Logo">
+    <div class="px-3 pt-7 pb-5 text-center border-b border-white/10 overflow-hidden">
+        <img src="{{ asset('images/logo (3).png') }}"
+             class="mx-auto object-contain transition-all duration-300"
+             :class="sidebarOpen ? 'w-24 h-24' : 'w-12 h-12'"
+             alt="Logo">
 
-        <h2 class="mt-3 text-3xl font-black leading-tight">
+        <h2 x-show="sidebarOpen" x-transition class="mt-3 text-3xl font-black leading-tight">
             CleverOps
         </h2>
 
-        <p class="text-cyan-300 text-xs mt-1 font-bold tracking-wide">
+        <p x-show="sidebarOpen" x-transition class="text-cyan-300 text-xs mt-1 font-bold tracking-wide">
             Clever Mind POB
         </p>
     </div>
 
     <nav class="px-4 py-5 pb-28">
 
-        <div class="sidebar-section">Main</div>
+        <div class="sidebar-section" x-show="sidebarOpen" x-transition>Main</div>
 
         @if($user->hasPermission('dashboard.view') || $user->hasRole('admin'))
-            <a href="{{ route('dashboard') }}"
-               class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" title="Dashboard">
                 <span class="sidebar-icon">📊</span>
-                <span>Dashboard</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Dashboard</span>
             </a>
         @endif
 
-        <a href="{{ route('my-tasks.index') }}"
-           class="sidebar-link {{ request()->routeIs('my-tasks.*') ? 'active' : '' }}">
+        <a href="{{ route('my-tasks.index') }}" class="sidebar-link {{ request()->routeIs('my-tasks.*') ? 'active' : '' }}" title="My Tasks">
             <span class="sidebar-icon">✅</span>
-            <span>My Tasks</span>
+            <span class="sidebar-text" x-show="sidebarOpen" x-transition>My Tasks</span>
         </a>
 
         @if($user->hasPermission('notifications.view') || $user->hasRole('admin'))
-            <a href="{{ route('notifications.index') }}"
-               class="sidebar-link {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
+            <a href="{{ route('notifications.index') }}" class="sidebar-link {{ request()->routeIs('notifications.*') ? 'active' : '' }}" title="Notifications">
                 <span class="sidebar-icon">🔔</span>
-                <span>Notifications</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Notifications</span>
             </a>
         @endif
 
-
         @if($canViewProjects || $canViewTeams || $canViewTasks)
-            <div class="sidebar-section">Workspace</div>
+            <div class="sidebar-section" x-show="sidebarOpen" x-transition>Workspace</div>
         @endif
 
         @if($canViewProjects)
-            <a href="{{ route('projects.index') }}"
-               class="sidebar-link {{ request()->routeIs('projects.*') ? 'active' : '' }}">
+            <a href="{{ route('projects.index') }}" class="sidebar-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" title="Projects">
                 <span class="sidebar-icon">🚀</span>
-                <span>Projects</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Projects</span>
             </a>
         @endif
 
         @if($canViewTeams)
-            <a href="{{ route('teams.index') }}"
-               class="sidebar-link {{ request()->routeIs('teams.*') ? 'active' : '' }}">
+            <a href="{{ route('teams.index') }}" class="sidebar-link {{ request()->routeIs('teams.*') ? 'active' : '' }}" title="Teams">
                 <span class="sidebar-icon">👥</span>
-                <span>Teams</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Teams</span>
             </a>
         @endif
 
         @if($canViewTasks)
-            <a href="{{ route('team-tasks.index') }}"
-               class="sidebar-link {{ request()->routeIs('team-tasks.*') ? 'active' : '' }}">
+            <a href="{{ route('team-tasks.index') }}" class="sidebar-link {{ request()->routeIs('team-tasks.*') ? 'active' : '' }}" title="Team Tasks">
                 <span class="sidebar-icon">🧩</span>
-                <span>Team Tasks</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Team Tasks</span>
             </a>
         @endif
 
-
         @if($canViewEmployees || $canViewDepartments || $canViewTasks || $canViewDocuments)
-            <div class="sidebar-section">Management</div>
+            <div class="sidebar-section" x-show="sidebarOpen" x-transition>Management</div>
         @endif
 
         @if($canViewEmployees)
-            <a href="{{ route('employees.index') }}"
-               class="sidebar-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+            <a href="{{ route('employees.index') }}" class="sidebar-link {{ request()->routeIs('employees.*') ? 'active' : '' }}" title="Employees">
                 <span class="sidebar-icon">👤</span>
-                <span>Employees</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Employees</span>
             </a>
         @endif
 
         @if($canViewDepartments)
-            <a href="{{ route('departments.index') }}"
-               class="sidebar-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+            <a href="{{ route('departments.index') }}" class="sidebar-link {{ request()->routeIs('departments.*') ? 'active' : '' }}" title="Departments">
                 <span class="sidebar-icon">🏢</span>
-                <span>Departments</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Departments</span>
             </a>
         @endif
 
         @if($canViewTasks)
-            <a href="{{ route('tasks.index') }}"
-               class="sidebar-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}">
+            <a href="{{ route('tasks.index') }}" class="sidebar-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" title="Tasks">
                 <span class="sidebar-icon">📋</span>
-                <span>Tasks</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Tasks</span>
             </a>
         @endif
 
         @if($canViewDocuments)
-            <a href="{{ route('documents.index') }}"
-               class="sidebar-link {{ request()->routeIs('documents.*') ? 'active' : '' }}">
+            <a href="{{ route('documents.index') }}" class="sidebar-link {{ request()->routeIs('documents.*') ? 'active' : '' }}" title="Documents">
                 <span class="sidebar-icon">📁</span>
-                <span>Documents</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Documents</span>
             </a>
         @endif
 
-
         @if($canViewUsers || $canViewRoles)
-            <div class="sidebar-section">Administration</div>
+            <div class="sidebar-section" x-show="sidebarOpen" x-transition>Administration</div>
         @endif
 
         @if($canViewUsers)
-            <a href="{{ route('users.index') }}"
-               class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+            <a href="{{ route('users.index') }}" class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}" title="Users">
                 <span class="sidebar-icon">🧑‍💻</span>
-                <span>Users</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Users</span>
             </a>
         @endif
 
         @if($canViewRoles)
-            <a href="{{ route('roles.index') }}"
-               class="sidebar-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+            <a href="{{ route('roles.index') }}" class="sidebar-link {{ request()->routeIs('roles.*') ? 'active' : '' }}" title="Roles">
                 <span class="sidebar-icon">🔐</span>
-                <span>Roles</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Roles</span>
             </a>
         @endif
 
-
         @if($canViewFinance)
-            <div class="sidebar-section">Business</div>
+            <div class="sidebar-section" x-show="sidebarOpen" x-transition>Business</div>
         @endif
 
         @if($user->hasPermission('finance.view') || $user->hasRole('admin'))
-            <a href="{{ route('finance.index') }}"
-               class="sidebar-link {{ request()->routeIs('finance.*') ? 'active' : '' }}">
+            <a href="{{ route('finance.index') }}" class="sidebar-link {{ request()->routeIs('finance.*') ? 'active' : '' }}" title="Finance">
                 <span class="sidebar-icon">📈</span>
-                <span>Finance</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Finance</span>
             </a>
         @endif
 
         @if($user->hasPermission('income.view') || $user->hasRole('admin'))
-            <a href="{{ route('incomes.index') }}"
-               class="sidebar-link {{ request()->routeIs('incomes.*') ? 'active' : '' }}">
+            <a href="{{ route('incomes.index') }}" class="sidebar-link {{ request()->routeIs('incomes.*') ? 'active' : '' }}" title="Income">
                 <span class="sidebar-icon">💵</span>
-                <span>Income</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Income</span>
             </a>
         @endif
 
         @if($user->hasPermission('expenses.view') || $user->hasRole('admin'))
-            <a href="{{ route('expenses.index') }}"
-               class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
+            <a href="{{ route('expenses.index') }}" class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}" title="Expenses">
                 <span class="sidebar-icon">💸</span>
-                <span>Expenses</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Expenses</span>
             </a>
         @endif
 
+        <div class="sidebar-section" x-show="sidebarOpen" x-transition>Account</div>
 
-        <div class="sidebar-section">Account</div>
-
-        <a href="{{ route('profile.edit') }}"
-           class="sidebar-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+        <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}" title="Profile">
             <span class="sidebar-icon">⚙️</span>
-            <span>Profile</span>
+            <span class="sidebar-text" x-show="sidebarOpen" x-transition>Profile</span>
         </a>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="sidebar-link logout w-full">
+            <button type="submit" class="sidebar-link logout w-full" title="Logout">
                 <span class="sidebar-icon">🚪</span>
-                <span>Logout</span>
+                <span class="sidebar-text" x-show="sidebarOpen" x-transition>Logout</span>
             </button>
         </form>
 
-        <div class="sidebar-footer">
+        <div class="sidebar-footer" x-show="sidebarOpen" x-transition>
             <span>CleverOps v1.0</span>
             <small>Enterprise Workspace</small>
         </div>
@@ -234,6 +210,7 @@
     font-size:14px;
     transition:.25s ease;
     margin-bottom:6px;
+    white-space:nowrap;
 }
 
 .sidebar-link:hover{
@@ -262,11 +239,34 @@
 .sidebar-icon{
     width:24px;
     height:24px;
+    min-width:24px;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:17px;
     flex-shrink:0;
+}
+
+.sidebar-text{
+    overflow:hidden;
+}
+
+aside.w-\[72px\] nav{
+    padding-left:10px;
+    padding-right:10px;
+}
+
+aside.w-\[72px\] .sidebar-link{
+    justify-content:center;
+    padding:12px 0;
+}
+
+aside.w-\[72px\] .sidebar-icon{
+    margin:auto;
+}
+
+aside.w-\[72px\] .sidebar-link.active::before{
+    left:-4px;
 }
 
 .logout{
