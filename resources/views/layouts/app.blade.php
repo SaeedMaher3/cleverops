@@ -31,45 +31,36 @@
 
     @include('layouts.navigation')
 
+    <!-- Sidebar Toggle خارج المحتوى -->
+    <button
+        @click="sidebarOpen = !sidebarOpen"
+        class="fixed z-[9999] bottom-8 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-500 text-white shadow-xl border-4 border-white flex items-center justify-center transition-all duration-300"
+        :class="sidebarOpen ? 'left-[276px]' : 'left-5'"
+    >
+        <span x-show="sidebarOpen" class="text-2xl font-black">‹</span>
+        <span x-show="!sidebarOpen" class="text-2xl font-black">›</span>
+    </button>
+
     <div
-       class="min-h-screen bg-[#F7F8FC] rounded-tl-[38px] relative transition-all duration-300"
+        class="min-h-screen bg-[#F7F8FC] rounded-tl-[38px] relative transition-all duration-300"
         :class="sidebarOpen ? 'ml-[300px]' : 'ml-0'"
     >
-
-       <!-- Sidebar Toggle -->
-<button
-    @click="sidebarOpen = !sidebarOpen"
-    class="fixed z-[9999] bottom-8 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-500 text-white shadow-xl border-4 border-white flex items-center justify-center transition-all duration-300"
-    :class="sidebarOpen ? 'left-[276px]' : 'left-5'"
->
-    <span x-show="sidebarOpen" class="text-2xl font-black">‹</span>
-    <span x-show="!sidebarOpen" class="text-2xl font-black">›</span>
-</button>
 
         <!-- Top Right -->
         <div class="absolute top-6 right-10 z-50 flex items-center gap-7">
 
-            <!-- Search -->
             <div class="w-[430px] relative">
-
-                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-[#21005D] text-xl">
-                    🔍
-                </span>
+                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-[#21005D] text-xl">🔍</span>
 
                 <input
                     type="text"
                     placeholder="Search anything..."
                     class="w-full pl-14 pr-12 py-4 border-2 border-purple-100 rounded-[28px] bg-white shadow-[0_10px_30px_rgba(91,0,200,.08)] focus:outline-none focus:ring-2 focus:ring-purple-500">
 
-                <span class="absolute right-5 top-1/2 -translate-y-1/2 text-[#21005D] text-2xl">
-                    ⌕
-                </span>
-
+                <span class="absolute right-5 top-1/2 -translate-y-1/2 text-[#21005D] text-2xl">⌕</span>
             </div>
 
-            <!-- Notifications -->
             <a href="{{ route('notifications.index') }}" class="relative">
-
                 <div class="w-14 h-14 rounded-full bg-white shadow-[0_10px_25px_rgba(91,0,200,.12)] flex items-center justify-center text-2xl hover:scale-105 transition">
                     🔔
                 </div>
@@ -79,47 +70,36 @@
                         {{ $notificationCount }}
                     </span>
                 @endif
-
             </a>
 
-            <!-- User -->
             <div class="flex items-center gap-4">
-
                 <img
                     src="{{ asset('images/logo (3).png') }}"
                     class="w-16 h-16 rounded-full border-4 border-purple-100 object-cover bg-white"
                     alt="Profile">
 
                 <div>
-
                     <div class="font-extrabold text-[#21005D] text-lg">
                         {{ Auth::user()->name }}
                     </div>
 
                     <div class="text-base text-[#21005D]/65">
-
                         @php
                             $employeeRole = optional($employee?->role)->name;
                         @endphp
 
                         {{ $employeeRole ?? 'Employee' }}
-
                     </div>
-
                 </div>
 
-                <div class="text-[#21005D] text-xl">
-                    ⌄
-                </div>
-
+                <div class="text-[#21005D] text-xl">⌄</div>
             </div>
 
         </div>
 
-      <!-- Content -->
-<main class="px-10 pt-28 pb-8">
-    @yield('content')
-</main>
+        <main class="px-10 pt-28 pb-8">
+            @yield('content')
+        </main>
 
     </div>
 
