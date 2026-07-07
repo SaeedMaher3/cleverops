@@ -244,8 +244,8 @@
 
 .sidebar-link.active{
     color:white;
-    background:linear-gradient(135deg,#8B00FF,#D946EF);
-    box-shadow:0 14px 35px rgba(139,0,255,.38);
+    background:linear-gradient(135deg,#9333EA,#D946EF);
+    box-shadow:0 18px 38px rgba(217,70,239,.35);
 }
 
 .sidebar-link.active::before{
