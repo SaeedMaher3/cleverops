@@ -15,9 +15,9 @@ public function index()
 {
     $user = auth()->user();
 
-    $isAdmin = $user->hasPermission('projects.view_all')
-        || $user->hasRole('Super Admin')
-        || $user->hasRole('Admin');
+    $roleName = strtolower(trim($user->role?->name ?? ''));
+
+    $isAdmin = in_array($roleName, ['admin', 'super admin']);
 
     if ($isAdmin) {
         $projects = Project::with('manager')
@@ -25,8 +25,10 @@ public function index()
             ->paginate(10);
     } else {
         $projects = Project::with('manager')
-            ->whereHas('members', function ($q) use ($user) {
-                $q->where('users.id', $user->id);
+            ->whereIn('id', function ($query) use ($user) {
+                $query->select('project_id')
+                    ->from('project_user')
+                    ->where('user_id', $user->id);
             })
             ->latest()
             ->paginate(10);
