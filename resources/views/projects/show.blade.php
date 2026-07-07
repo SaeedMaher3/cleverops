@@ -2,7 +2,7 @@
 
 @section('content')
 
-@vite(['resources/css/app.css', 'resources/css/project-workspace.css'])
+
 
 @php
     $projectTasks = $project->projectTasks ?? collect();
