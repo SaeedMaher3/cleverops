@@ -64,25 +64,8 @@
 
                         @foreach($departments as $department)
                             <option value="{{ $department->id }}"
-                                {{ $employee->department_id == $department->id ? 'selected' : '' }}>
+                                {{ old('department_id', $employee->department_id) == $department->id ? 'selected' : '' }}>
                                 {{ $department->name }}
-                            </option>
-                        @endforeach
-
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block mb-2 font-medium">Role</label>
-
-                    <select name="role_id"
-                            class="w-full border rounded px-3 py-2"
-                            required>
-
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}"
-                                {{ $employee->role_id == $role->id ? 'selected' : '' }}>
-                                {{ $role->display_name }}
                             </option>
                         @endforeach
 
@@ -105,17 +88,17 @@
                             class="w-full border rounded px-3 py-2">
 
                         <option value="active"
-                            {{ $employee->status == 'active' ? 'selected' : '' }}>
+                            {{ old('status', $employee->status) == 'active' ? 'selected' : '' }}>
                             Active
                         </option>
 
                         <option value="inactive"
-                            {{ $employee->status == 'inactive' ? 'selected' : '' }}>
+                            {{ old('status', $employee->status) == 'inactive' ? 'selected' : '' }}>
                             Inactive
                         </option>
 
                         <option value="on_leave"
-                            {{ $employee->status == 'on_leave' ? 'selected' : '' }}>
+                            {{ old('status', $employee->status) == 'on_leave' ? 'selected' : '' }}>
                             On Leave
                         </option>
 

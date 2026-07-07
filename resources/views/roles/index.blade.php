@@ -3,14 +3,36 @@
 @section('content')
 <div class="container mx-auto px-4 py-6">
 
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Roles</h1>
+<div class="flex justify-between items-center mb-6">
+
+    <div>
+        <h1 class="text-2xl font-bold">Roles & Permissions</h1>
+        <p class="text-gray-500 text-sm mt-1">
+            Manage system roles and permissions
+        </p>
+    </div>
+
+    <div class="flex gap-3">
+
+        <form action="{{ route('roles.defaults') }}" method="POST">
+            @csrf
+
+            <button
+                onclick="return confirm('Create default roles and permissions?')"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">
+                Default Roles
+            </button>
+
+        </form>
 
         <a href="{{ route('roles.create') }}"
            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             Add Role
         </a>
+
     </div>
+
+</div>
 
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">

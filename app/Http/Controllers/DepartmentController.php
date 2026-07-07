@@ -48,4 +48,33 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index')
             ->with('success', 'Department deleted successfully');
     }
+    public function seedDefaults()
+{
+    $departments = [
+        ['name' => 'Information Technology (IT)', 'description' => 'Software, systems, networks, and technical support'],
+        ['name' => 'Human Resources (HR)', 'description' => 'Recruitment, employees, attendance, and HR operations'],
+        ['name' => 'Finance', 'description' => 'Accounting, income, expenses, and financial reports'],
+        ['name' => 'Operations', 'description' => 'Daily business operations and workflow management'],
+        ['name' => 'Project Management Office (PMO)', 'description' => 'Projects planning, tracking, and delivery'],
+        ['name' => 'Sales', 'description' => 'Sales activities and client relationships'],
+        ['name' => 'Marketing', 'description' => 'Marketing campaigns, branding, and promotion'],
+        ['name' => 'Customer Support', 'description' => 'Customer service and support requests'],
+        ['name' => 'Procurement', 'description' => 'Purchasing, suppliers, and procurement processes'],
+        ['name' => 'Administration', 'description' => 'General administration and office management'],
+    ];
+
+    foreach ($departments as $department) {
+        Department::firstOrCreate(
+            ['name' => $department['name']],
+            [
+                'description' => $department['description'],
+                'status' => 'active',
+            ]
+        );
+    }
+
+    return redirect()
+        ->route('departments.index')
+        ->with('success', 'Default departments created successfully.');
+}
 }

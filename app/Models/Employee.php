@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Employee extends Model
 {
@@ -13,7 +15,6 @@ class Employee extends Model
         'phone',
         'job_title',
         'department_id',
-        'role_id',
         'hire_date',
         'profile_image',
         'status',
@@ -24,8 +25,18 @@ class Employee extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function role(): BelongsTo
+    public function user(): HasOne
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(User::class);
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function teamMemberships(): HasMany
+    {
+        return $this->hasMany(TeamMember::class);
     }
 }

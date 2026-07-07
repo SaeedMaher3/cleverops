@@ -12,10 +12,20 @@ class Role extends Model
         'display_name',
         'description',
         'status',
+        'permissions',
+    ];
+
+    protected $casts = [
+        'permissions' => 'array',
     ];
 
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        return in_array($permission, $this->permissions ?? []);
     }
 }

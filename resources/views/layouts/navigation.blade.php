@@ -1,3 +1,19 @@
+@php
+    $user = auth()->user();
+
+    $canViewProjects = $user->hasPermission('projects.view') || $user->hasRole('admin');
+    $canViewTeams = $user->hasPermission('teams.view') || $user->hasRole('admin');
+    $canViewTasks = $user->hasPermission('tasks.view') || $user->hasRole('admin');
+    $canViewDocuments = $user->hasPermission('documents.view') || $user->hasRole('admin');
+
+    $canViewEmployees = $user->hasPermission('employees.view') || $user->hasRole('admin');
+    $canViewDepartments = $user->hasPermission('departments.view') || $user->hasRole('admin');
+    $canViewUsers = $user->hasPermission('users.view') || $user->hasRole('admin');
+    $canViewRoles = $user->hasPermission('roles.view') || $user->hasRole('admin');
+
+    $canViewFinance = $user->hasPermission('finance.view') || $user->hasPermission('income.view') || $user->hasPermission('expenses.view') || $user->hasRole('admin');
+@endphp
+
 <aside
     x-show="sidebarOpen"
     x-transition:enter="transition ease-out duration-300"
@@ -6,98 +22,185 @@
     x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="translate-x-0"
     x-transition:leave-end="-translate-x-full"
-    class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#1A0040] via-[#160033] to-[#0D1B3E] text-white overflow-y-auto sidebar-scroll z-50"
+    class="fixed left-0 top-0 h-screen w-[300px] bg-gradient-to-b from-[#160033] via-[#12002b] to-[#071735] text-white overflow-y-auto sidebar-scroll z-50"
 >
+    <div class="px-6 pt-7 pb-5 text-center border-b border-white/10">
+        <img src="{{ asset('images/logo (3).png') }}" class="w-24 h-24 mx-auto object-contain" alt="Logo">
 
-    <!-- Logo -->
-    <div class="text-center pt-8 pb-8">
-
-        <img
-            src="{{ asset('images/logo (3).png') }}"
-            class="w-32 h-32 mx-auto mb-4 object-contain"
-            alt="Logo">
-
-        <h2 class="text-4xl font-extrabold leading-tight">
-            Clever Mind POB
+        <h2 class="mt-3 text-3xl font-black leading-tight">
+            CleverOps
         </h2>
 
-        <p class="text-cyan-400 text-sm mt-2 font-semibold">
-            Power Of Believing
+        <p class="text-cyan-300 text-xs mt-1 font-bold tracking-wide">
+            Clever Mind POB
         </p>
-
     </div>
 
-    <nav class="px-4 pb-24">
+    <nav class="px-4 py-5 pb-28">
 
-        <!-- Dashboard -->
-        <a href="{{ route('dashboard') }}"
-           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-4 transition-all duration-300
-           {{ request()->routeIs('dashboard')
-                ? 'bg-gradient-to-r from-purple-600 to-fuchsia-500 shadow-lg'
-                : 'hover:bg-white/10' }}">
+        <div class="sidebar-section">Main</div>
 
-            📊 <span class="font-semibold">Dashboard</span>
+        @if($user->hasPermission('dashboard.view') || $user->hasRole('admin'))
+            <a href="{{ route('dashboard') }}"
+               class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <span class="sidebar-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+        @endif
+
+        <a href="{{ route('my-tasks.index') }}"
+           class="sidebar-link {{ request()->routeIs('my-tasks.*') ? 'active' : '' }}">
+            <span class="sidebar-icon">✅</span>
+            <span>My Tasks</span>
         </a>
 
-        <!-- Workforce -->
-        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
-            Workforce
-        </div>
+        @if($user->hasPermission('notifications.view') || $user->hasRole('admin'))
+            <a href="{{ route('notifications.index') }}"
+               class="sidebar-link {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🔔</span>
+                <span>Notifications</span>
+            </a>
+        @endif
 
-        <a href="{{ route('departments.index') }}"
-           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            🏢 <span>Departments</span>
-        </a>
 
-        <a href="{{ route('roles.index') }}"
-           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            🔐 <span>Roles</span>
-        </a>
+        @if($canViewProjects || $canViewTeams || $canViewTasks)
+            <div class="sidebar-section">Workspace</div>
+        @endif
 
-        <a href="{{ route('employees.index') }}"
-           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            👥 <span>Employees</span>
-        </a>
+        @if($canViewProjects)
+            <a href="{{ route('projects.index') }}"
+               class="sidebar-link {{ request()->routeIs('projects.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🚀</span>
+                <span>Projects</span>
+            </a>
+        @endif
 
-        <!-- Modules -->
-        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
-            Modules
-        </div>
+        @if($canViewTeams)
+            <a href="{{ route('teams.index') }}"
+               class="sidebar-link {{ request()->routeIs('teams.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">👥</span>
+                <span>Teams</span>
+            </a>
+        @endif
 
-        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            📋 <span>Tasks</span>
-        </a>
+        @if($canViewTasks)
+            <a href="{{ route('team-tasks.index') }}"
+               class="sidebar-link {{ request()->routeIs('team-tasks.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🧩</span>
+                <span>Team Tasks</span>
+            </a>
+        @endif
 
-        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            💰 <span>Finance</span>
-        </a>
 
-        <a href="#" class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            📁 <span>Documents</span>
-        </a>
+        @if($canViewEmployees || $canViewDepartments || $canViewTasks || $canViewDocuments)
+            <div class="sidebar-section">Management</div>
+        @endif
 
-        <!-- Account -->
-        <div class="text-xs uppercase tracking-wider text-slate-400 px-4 mt-8 mb-4 font-bold">
-            Account
-        </div>
+        @if($canViewEmployees)
+            <a href="{{ route('employees.index') }}"
+               class="sidebar-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">👤</span>
+                <span>Employees</span>
+            </a>
+        @endif
+
+        @if($canViewDepartments)
+            <a href="{{ route('departments.index') }}"
+               class="sidebar-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🏢</span>
+                <span>Departments</span>
+            </a>
+        @endif
+
+        @if($canViewTasks)
+            <a href="{{ route('tasks.index') }}"
+               class="sidebar-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">📋</span>
+                <span>Tasks</span>
+            </a>
+        @endif
+
+        @if($canViewDocuments)
+            <a href="{{ route('documents.index') }}"
+               class="sidebar-link {{ request()->routeIs('documents.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">📁</span>
+                <span>Documents</span>
+            </a>
+        @endif
+
+
+        @if($canViewUsers || $canViewRoles)
+            <div class="sidebar-section">Administration</div>
+        @endif
+
+        @if($canViewUsers)
+            <a href="{{ route('users.index') }}"
+               class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🧑‍💻</span>
+                <span>Users</span>
+            </a>
+        @endif
+
+        @if($canViewRoles)
+            <a href="{{ route('roles.index') }}"
+               class="sidebar-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">🔐</span>
+                <span>Roles</span>
+            </a>
+        @endif
+
+
+        @if($canViewFinance)
+            <div class="sidebar-section">Business</div>
+        @endif
+
+        @if($user->hasPermission('finance.view') || $user->hasRole('admin'))
+            <a href="{{ route('finance.index') }}"
+               class="sidebar-link {{ request()->routeIs('finance.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">📈</span>
+                <span>Finance</span>
+            </a>
+        @endif
+
+        @if($user->hasPermission('income.view') || $user->hasRole('admin'))
+            <a href="{{ route('incomes.index') }}"
+               class="sidebar-link {{ request()->routeIs('incomes.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">💵</span>
+                <span>Income</span>
+            </a>
+        @endif
+
+        @if($user->hasPermission('expenses.view') || $user->hasRole('admin'))
+            <a href="{{ route('expenses.index') }}"
+               class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">💸</span>
+                <span>Expenses</span>
+            </a>
+        @endif
+
+
+        <div class="sidebar-section">Account</div>
 
         <a href="{{ route('profile.edit') }}"
-           class="flex items-center gap-3 px-5 py-4 rounded-2xl mb-2 hover:bg-white/10 transition">
-            ⚙️ <span>Profile</span>
+           class="sidebar-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+            <span class="sidebar-icon">⚙️</span>
+            <span>Profile</span>
         </a>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-
-            <button
-                type="submit"
-                class="flex items-center gap-3 px-5 py-4 rounded-2xl w-full text-left hover:bg-red-500/20 transition">
-                🚪 <span>Logout</span>
+            <button type="submit" class="sidebar-link logout w-full">
+                <span class="sidebar-icon">🚪</span>
+                <span>Logout</span>
             </button>
         </form>
 
-    </nav>
+        <div class="sidebar-footer">
+            <span>CleverOps v1.0</span>
+            <small>Enterprise Workspace</small>
+        </div>
 
+    </nav>
 </aside>
 
 <style>
@@ -107,5 +210,94 @@
 
 .sidebar-scroll::-webkit-scrollbar{
     display:none;
+}
+
+.sidebar-section{
+    margin:24px 10px 10px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:rgba(255,255,255,.42);
+    font-weight:900;
+}
+
+.sidebar-link{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-height:48px;
+    padding:12px 16px;
+    border-radius:18px;
+    color:rgba(255,255,255,.82);
+    font-weight:800;
+    font-size:14px;
+    transition:.25s ease;
+    margin-bottom:6px;
+}
+
+.sidebar-link:hover{
+    background:rgba(255,255,255,.10);
+    color:white;
+    transform:translateX(3px);
+}
+
+.sidebar-link.active{
+    color:white;
+    background:linear-gradient(135deg,#7C3AED,#D946EF);
+    box-shadow:0 14px 30px rgba(217,70,239,.28);
+}
+
+.sidebar-link.active::before{
+    content:"";
+    position:absolute;
+    left:-8px;
+    top:13px;
+    width:4px;
+    height:22px;
+    border-radius:999px;
+    background:#22D3EE;
+}
+
+.sidebar-icon{
+    width:24px;
+    height:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    flex-shrink:0;
+}
+
+.logout{
+    color:#fecaca;
+}
+
+.logout:hover{
+    background:rgba(239,68,68,.16);
+    color:#fff;
+}
+
+.sidebar-footer{
+    margin:26px 10px 0;
+    padding:18px;
+    border-radius:22px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.10);
+}
+
+.sidebar-footer span{
+    display:block;
+    font-weight:900;
+    color:white;
+    font-size:13px;
+}
+
+.sidebar-footer small{
+    display:block;
+    margin-top:4px;
+    color:rgba(255,255,255,.45);
+    font-size:11px;
+    font-weight:700;
 }
 </style>

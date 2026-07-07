@@ -9,10 +9,24 @@
             <p class="text-sm text-slate-500 mt-1">Manage company departments</p>
         </div>
 
-        <a href="{{ route('departments.create') }}"
-           class="btn-primary">
-            Add Department
-        </a>
+      <div class="flex gap-3">
+
+    <form action="{{ route('departments.defaults') }}" method="POST">
+        @csrf
+
+        <button
+            onclick="return confirm('Create default company departments?')"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">
+            Default Departments
+        </button>
+    </form>
+
+    <a href="{{ route('departments.create') }}"
+       class="btn-primary">
+        Add Department
+    </a>
+
+</div>
     </div>
 
     @if(session('success'))
